@@ -6,3 +6,4 @@ orjson
 python-multipart
 python-telegram-bot
 uvicorn[standard]
+selenium
