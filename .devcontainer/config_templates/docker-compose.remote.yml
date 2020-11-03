@@ -1,0 +1,7 @@
+version: "3.4"
+services:
+  my_host:
+    volumes:
+      - HOME_PATH/my-api:/app
+      - HOME_PATH/.ssh:/home/vscode/.ssh:ro
+      - /etc/localtime:/etc/localtime:ro

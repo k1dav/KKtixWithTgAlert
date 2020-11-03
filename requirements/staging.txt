@@ -1,0 +1,8 @@
+beautifulsoup4
+fastapi
+httpx
+loguru
+orjson
+python-multipart
+python-telegram-bot
+uvicorn[standard]

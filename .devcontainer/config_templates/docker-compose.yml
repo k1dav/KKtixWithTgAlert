@@ -1,0 +1,18 @@
+version: "3.4"
+services:
+  my_host:
+    build:
+      context: ./
+      dockerfile: images/my-api/Dockerfile
+    environment:
+      DEBUG: "true"
+      PROJECT_NAME: "my-api"
+      TG_BOT_TOKEN: "my-tg-bot-token"
+    container_name: my_host
+    user: vscode
+    tty: true
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../:/app
+      - HOME_PATH/.ssh:/home/vscode/.ssh:ro
