@@ -18,10 +18,10 @@ args = parser.parse_args()
 def main():
     ready_to_process_conf = True
 
-    user_vars = {"username": os.getlogin(), "uid": os.getuid(), "gid": os.getgid()}
+    user_vars = {"username": 1000, "uid": os.getuid(), "gid": os.getgid()}
     if os.getuid() == 0:
-        user_vars["uid"] = pwd.getpwnam(os.getlogin()).pw_uid
-        user_vars["gid"] = pwd.getpwnam(os.getlogin()).pw_gid
+        user_vars["uid"] = pwd.getpwnam(1000).pw_uid
+        user_vars["gid"] = pwd.getpwnam(1000).pw_gid
 
     if args.container_type == "remote":
         ready_to_process_conf = False
@@ -91,7 +91,7 @@ def create_dirs(path: str):
         os.makedirs(path)
 
 
-def check_perms(path: str, uid=os.getlogin(), gid=os.getlogin()):
+def check_perms(path: str, uid=1000, gid=1000):
     stat = os.stat(path)
     if (
         (isinstance(uid, int) or isinstance(gid, int))
@@ -108,7 +108,7 @@ def check_perms(path: str, uid=os.getlogin(), gid=os.getlogin()):
         chown_recursive(path, uid, gid)
 
 
-def chown_recursive(path: str, uid=os.getlogin(), gid=os.getlogin()):
+def chown_recursive(path: str, uid=1000, gid=1000):
     command = f"chown {uid}:{gid} -R {path}"
     p = subprocess.run(shlex.split(command))
     if p.returncode != 0:
@@ -185,13 +185,13 @@ def input_remote_user() -> str:
         txt = input(
             (
                 "\nInput your username on remote host, "
-                f"press Enter to use your current login name ({os.getlogin()}): "
+                f"press Enter to use your current login name ({1000}): "
             )
         )
         if len(txt.strip()) > 0:
             return txt
         else:
-            return os.getlogin()
+            return 1000
 
 
 def write_remote_devcontainer_json():
